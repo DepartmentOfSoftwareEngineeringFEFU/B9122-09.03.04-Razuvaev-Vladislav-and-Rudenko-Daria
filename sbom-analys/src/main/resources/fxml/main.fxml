@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+  xmlns:fx="http://javafx.com/fxml/1"
+  fx:controller="analys.sbom.controllers.MainController"
+  stylesheets="@/css/dark-theme.css"
+  prefWidth="1280" prefHeight="820"
+  style="-fx-background-color: #0f172a;">
+
+  <top>
+    <VBox
+      style="-fx-background-color:#16213e;-fx-border-color:transparent transparent #2d3748 transparent;-fx-border-width:0 0 1 0;-fx-padding:14 20 14 20;"
+      spacing="12">
+
+      <HBox alignment="CENTER_LEFT" spacing="10">
+        <VBox spacing="1" HBox.hgrow="NEVER">
+          <Label text="SBOM Analyzer"
+            style="-fx-font-size:17px;-fx-font-weight:bold;-fx-text-fill:#e2e8f0;"/>
+          <Label text="Vulnerability Intelligence"
+            style="-fx-font-size:10px;-fx-text-fill:#4f46e5;"/>
+        </VBox>
+        <Region HBox.hgrow="NEVER" prefWidth="16"/>
+
+        <VBox HBox.hgrow="ALWAYS" spacing="3">
+          <HBox
+            style="-fx-background-color:#0f172a;-fx-border-color:#2d3748;-fx-border-width:1;-fx-border-radius:7;-fx-background-radius:7;-fx-padding:7 12 7 12;"
+            alignment="CENTER_LEFT" spacing="8">
+            <Label text="📄" style="-fx-font-size:13px;"/>
+            <TextField fx:id="filePathField"
+              promptText="Выберите SBOM файл (.json, .xml)..."
+              style="-fx-background-color:transparent;-fx-border-color:transparent;-fx-text-fill:#94a3b8;-fx-font-size:12px;-fx-prompt-text-fill:#475569;"
+              HBox.hgrow="ALWAYS" editable="false"/>
+          </HBox>
+          <Label fx:id="formatLabel" text="Формат не выбран"
+            style="-fx-text-fill:#475569;-fx-font-size:10px;-fx-padding:0 0 0 4;"/>
+        </VBox>
+
+        <Button text="Открыть" onAction="#chooseFile"
+          style="-fx-background-color:#1e293b;-fx-text-fill:#94a3b8;-fx-border-color:#2d3748;-fx-border-width:1;-fx-border-radius:7;-fx-background-radius:7;-fx-padding:9 16 9 16;-fx-font-size:13px;-fx-cursor:hand;"/>
+
+        <Button text="▶  Запустить анализ" onAction="#analyze" styleClass="btn-primary"/>
+
+        <Button text="⬡  Граф" onAction="#openGraph"
+          style="-fx-background-color:#1e1b4b;-fx-text-fill:#a5b4fc;-fx-border-color:#4338ca;-fx-border-width:1;-fx-border-radius:7;-fx-background-radius:7;-fx-padding:9 14 9 14;-fx-font-size:13px;-fx-cursor:hand;"/>
+
+        <Button text="📤  Экспорт отчёта" onAction="#exportReport"
+          style="-fx-background-color:#052e16;-fx-text-fill:#86efac;-fx-border-color:#14532d;-fx-border-width:1;-fx-border-radius:7;-fx-background-radius:7;-fx-padding:9 14 9 14;-fx-font-size:13px;-fx-cursor:hand;"/>
+      </HBox>
+
+      <HBox spacing="10" alignment="CENTER_LEFT">
+        <VBox
+          style="-fx-background-color:#16213e;-fx-border-color:#2d3748;-fx-border-width:1;-fx-border-radius:8;-fx-background-radius:8;-fx-padding:12 18 12 18;-fx-min-width:130;"
+          spacing="4">
+          <Label text="Компонентов" style="-fx-font-size:11px;-fx-text-fill:#64748b;"/>
+          <Label fx:id="statTotal" text="—"
+            style="-fx-font-size:24px;-fx-font-weight:bold;-fx-text-fill:#e2e8f0;"/>
+        </VBox>
+        <VBox
+          style="-fx-background-color:#16213e;-fx-border-color:#2d3748;-fx-border-width:1;-fx-border-radius:8;-fx-background-radius:8;-fx-padding:12 18 12 18;-fx-min-width:130;"
+          spacing="4">
+          <Label text="Уязвимых" style="-fx-font-size:11px;-fx-text-fill:#64748b;"/>
+          <Label fx:id="statVulnerable" text="—"
+            style="-fx-font-size:24px;-fx-font-weight:bold;-fx-text-fill:#f87171;"/>
+        </VBox>
+        <VBox
+          style="-fx-background-color:#16213e;-fx-border-color:#2d3748;-fx-border-width:1;-fx-border-radius:8;-fx-background-radius:8;-fx-padding:12 18 12 18;-fx-min-width:140;"
+          spacing="4">
+          <Label text="Critical / High" style="-fx-font-size:11px;-fx-text-fill:#64748b;"/>
+          <Label fx:id="statCriticalHigh" text="—"
+            style="-fx-font-size:24px;-fx-font-weight:bold;-fx-text-fill:#fb923c;"/>
+        </VBox>
+        <VBox
+          style="-fx-background-color:#16213e;-fx-border-color:#2d3748;-fx-border-width:1;-fx-border-radius:8;-fx-background-radius:8;-fx-padding:12 18 12 18;-fx-min-width:140;"
+          spacing="4">
+          <Label text="Medium / Low" style="-fx-font-size:11px;-fx-text-fill:#64748b;"/>
+          <Label fx:id="statMediumLow" text="—"
+            style="-fx-font-size:24px;-fx-font-weight:bold;-fx-text-fill:#818cf8;"/>
+        </VBox>
+        <VBox
+          style="-fx-background-color:#16213e;-fx-border-color:#2d3748;-fx-border-width:1;-fx-border-radius:8;-fx-background-radius:8;-fx-padding:12 18 12 18;-fx-min-width:130;"
+          spacing="4">
+          <Label text="Безопасных" style="-fx-font-size:11px;-fx-text-fill:#64748b;"/>
+          <Label fx:id="statSafe" text="—"
+            style="-fx-font-size:24px;-fx-font-weight:bold;-fx-text-fill:#4ade80;"/>
+        </VBox>
+        <Region HBox.hgrow="ALWAYS"/>
+        <VBox
+          style="-fx-background-color:#1e1b4b;-fx-border-color:#4338ca;-fx-border-width:1;-fx-border-radius:8;-fx-background-radius:8;-fx-padding:12 18 12 18;-fx-min-width:220;"
+          spacing="4">
+          <Label text="Проект" style="-fx-font-size:11px;-fx-text-fill:#a5b4fc;"/>
+          <Label fx:id="statProject" text="Не выбран"
+            style="-fx-font-size:14px;-fx-font-weight:bold;-fx-text-fill:#c7d2fe;"/>
+        </VBox>
+      </HBox>
+    </VBox>
+  </top>
+
+  <center>
+    <VBox
+      style="-fx-background-color:#16213e;-fx-border-color:#2d3748;-fx-border-width:1;-fx-border-radius:8;-fx-background-radius:8;"
+      spacing="0">
+      <padding>
+        <Insets top="12" right="12" bottom="12" left="12"/>
+      </padding>
+
+      <HBox
+        style="-fx-background-color:#1e293b;-fx-border-color:transparent transparent #2d3748 transparent;-fx-border-width:0 0 1 0;-fx-padding:10 16 10 16;-fx-background-radius:8 8 0 0;"
+        alignment="CENTER_LEFT" spacing="12">
+        <Label text="Уязвимости"
+          style="-fx-font-size:12px;-fx-font-weight:bold;-fx-text-fill:#94a3b8;"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label text="Нажмите на действие для инструкций · Двойной клик по строке"
+          style="-fx-text-fill:#475569;-fx-font-size:11px;"/>
+        <Label fx:id="vulnCountLabel" text=""
+          style="-fx-text-fill:#4f46e5;-fx-font-size:11px;-fx-font-weight:bold;"/>
+      </HBox>
+
+      <TableView fx:id="vulnerabilitiesTable" VBox.vgrow="ALWAYS" styleClass="table-view">
+        <columns>
+          <TableColumn fx:id="componentColumn" text="Компонент" prefWidth="155" minWidth="110"/>
+          <TableColumn fx:id="versionColumn" text="Версия" prefWidth="72" minWidth="55"/>
+          <TableColumn fx:id="vulnColumn" text="CVE" prefWidth="155" minWidth="130"/>
+          <TableColumn fx:id="severityColumn" text="Severity" prefWidth="105" minWidth="85"/>
+          <TableColumn fx:id="recommendColumn" text="Действие" prefWidth="100" minWidth="85"/>
+          <TableColumn fx:id="descriptionColumn" text="Описание" prefWidth="320" minWidth="200"/>
+          <TableColumn fx:id="pathColumn" text="Путь" prefWidth="220" minWidth="140"/>
+        </columns>
+        <placeholder>
+          <VBox alignment="CENTER" spacing="12">
+            <Label text="Нажмите «Открыть» для выбора формата и SBOM-файла"
+              style="-fx-text-fill:#475569;-fx-font-size:14px;"/>
+            <Label text="Поддерживаются: CycloneDX JSON/XML и SPDX JSON/XML"
+              style="-fx-text-fill:#334155;-fx-font-size:12px;"/>
+          </VBox>
+        </placeholder>
+      </TableView>
+    </VBox>
+  </center>
+
+  <bottom>
+    <HBox
+      style="-fx-background-color:#16213e;-fx-border-color:#2d3748 transparent transparent transparent;-fx-border-width:1 0 0 0;-fx-padding:8 16 8 16;"
+      alignment="CENTER_LEFT" spacing="16">
+      <Label fx:id="statusLabel" text="Готов к анализу"
+        style="-fx-text-fill:#64748b;-fx-font-size:12px;"/>
+      <Region HBox.hgrow="ALWAYS"/>
+      <Label text="CycloneDX · SPDX" style="-fx-text-fill:#334155;-fx-font-size:11px;"/>
+      <Label text="·" style="-fx-text-fill:#2d3748;-fx-font-size:11px;"/>
+      <Label text="OSV.dev API" style="-fx-text-fill:#4338ca;-fx-font-size:11px;"/>
+      <Label text="·" style="-fx-text-fill:#2d3748;-fx-font-size:11px;"/>
+      <Label text="PostgreSQL" style="-fx-text-fill:#475569;-fx-font-size:11px;"/>
+    </HBox>
+  </bottom>
+
+</BorderPane>
