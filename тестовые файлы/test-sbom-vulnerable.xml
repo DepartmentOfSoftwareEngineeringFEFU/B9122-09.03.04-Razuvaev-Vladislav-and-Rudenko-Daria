@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bom xmlns="http://cyclonedx.org/schema/bom/1.4"
+     serialNumber="urn:uuid:test-sbom-xml-vulnerable-001"
+     version="1">
+
+  <metadata>
+    <timestamp>2024-03-15T12:00:00Z</timestamp>
+    <tools>
+      <tool>
+        <vendor>Syft</vendor>
+        <name>syft</name>
+        <version>0.98.0</version>
+      </tool>
+    </tools>
+    <component type="application">
+      <bom-ref>root-app</bom-ref>
+      <name>demo-vulnerable-app</name>
+      <version>1.0.0</version>
+      <description>Тестовое приложение с известными уязвимостями для демонстрации SBOM-анализатора (CycloneDX XML)</description>
+    </component>
+  </metadata>
+
+  <components>
+
+    <!-- ★ CRITICAL: Log4Shell CVE-2021-44228 -->
+    <component type="library">
+      <bom-ref>log4j-core-2.14.1</bom-ref>
+      <group>org.apache.logging.log4j</group>
+      <name>log4j-core</name>
+      <version>2.14.1</version>
+      <purl>pkg:maven/org.apache.logging.log4j/log4j-core@2.14.1</purl>
+      <description>Apache Log4j Core - уязвимая версия (CVE-2021-44228 Log4Shell, RCE через JNDI)</description>
+      <licenses>
+        <license>
+          <id>Apache-2.0</id>
+        </license>
+      </licenses>
+      <hashes>
+        <hash alg="SHA-256">a00a54e3fb8cb83fab38f8714f240ecc13ab9c492584aa571aec5fc71b48732d</hash>
+      </hashes>
+    </component>
+
+    <!-- ★ CRITICAL: Spring4Shell CVE-2022-22965 -->
+    <component type="library">
+      <bom-ref>spring-core-5.3.18</bom-ref>
+      <group>org.springframework</group>
+      <name>spring-core</name>
+      <version>5.3.18</version>
+      <purl>pkg:maven/org.springframework/spring-core@5.3.18</purl>
+      <description>Spring Framework Core - уязвимая версия (CVE-2022-22965 Spring4Shell)</description>
+      <licenses>
+        <license>
+          <id>Apache-2.0</id>
+        </license>
+      </licenses>
+    </component>
+
+    <!-- ★ HIGH: Jackson Databind CVE-2022-42003 -->
+    <component type="library">
+      <bom-ref>jackson-databind-2.13.0</bom-ref>
+      <group>com.fasterxml.jackson.core</group>
+      <name>jackson-databind</name>
+      <version>2.13.0</version>
+      <purl>pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.13.0</purl>
+      <description>Jackson Databind - уязвимая версия (CVE-2022-42003)</description>
+      <licenses>
+        <license>
+          <id>Apache-2.0</id>
+        </license>
+      </licenses>
+    </component>
+
+    <!-- ★ CRITICAL: Text4Shell CVE-2022-42889 -->
+    <component type="library">
+      <bom-ref>commons-text-1.9</bom-ref>
+      <group>org.apache.commons</group>
+      <name>commons-text</name>
+      <version>1.9</version>
+      <purl>pkg:maven/org.apache.commons/commons-text@1.9</purl>
+      <description>Apache Commons Text - уязвимая версия (CVE-2022-42889 Text4Shell)</description>
+      <licenses>
+        <license>
+          <id>Apache-2.0</id>
+        </license>
+      </licenses>
+    </component>
+
+    <!-- ★ CRITICAL: H2 Console RCE CVE-2021-42392 -->
+    <component type="library">
+      <bom-ref>h2-1.4.200</bom-ref>
+      <group>com.h2database</group>
+      <name>h2</name>
+      <version>1.4.200</version>
+      <purl>pkg:maven/com.h2database/h2@1.4.200</purl>
+      <description>H2 Database - уязвимая версия (CVE-2021-42392 RCE через JNDI в H2 Console)</description>
+      <licenses>
+        <license>
+          <id>EPL-1.0</id>
+        </license>
+      </licenses>
+    </component>
+
+    <!-- ✓ безопасный: Spring Boot (транзитивная зависимость) -->
+    <component type="library">
+      <bom-ref>spring-boot-2.6.3</bom-ref>
+      <group>org.springframework.boot</group>
+      <name>spring-boot</name>
+      <version>2.6.3</version>
+      <purl>pkg:maven/org.springframework.boot/spring-boot@2.6.3</purl>
+      <description>Spring Boot - безопасная версия</description>
+      <licenses>
+        <license>
+          <id>Apache-2.0</id>
+        </license>
+      </licenses>
+    </component>
+
+    <!-- ✓ безопасный: SLF4J -->
+    <component type="library">
+      <bom-ref>slf4j-api-1.7.36</bom-ref>
+      <group>org.slf4j</group>
+      <name>slf4j-api</name>
+      <version>1.7.36</version>
+      <purl>pkg:maven/org.slf4j/slf4j-api@1.7.36</purl>
+      <description>SLF4J API - безопасная версия</description>
+      <licenses>
+        <license>
+          <id>MIT</id>
+        </license>
+      </licenses>
+    </component>
+
+    <!-- ✓ безопасный: Guava -->
+    <component type="library">
+      <bom-ref>guava-31.1-jre</bom-ref>
+      <group>com.google.guava</group>
+      <name>guava</name>
+      <version>31.1-jre</version>
+      <purl>pkg:maven/com.google.guava/guava@31.1-jre</purl>
+      <description>Google Guava - безопасная версия</description>
+      <licenses>
+        <license>
+          <id>Apache-2.0</id>
+        </license>
+      </licenses>
+    </component>
+
+    <!-- ▲ HIGH: PostgreSQL JDBC CVE-2022-21724 -->
+    <component type="library">
+      <bom-ref>postgresql-42.3.3</bom-ref>
+      <group>org.postgresql</group>
+      <name>postgresql</name>
+      <version>42.3.3</version>
+      <purl>pkg:maven/org.postgresql/postgresql@42.3.3</purl>
+      <description>PostgreSQL JDBC Driver - уязвимая версия (CVE-2022-21724)</description>
+      <licenses>
+        <license>
+          <id>BSD-2-Clause</id>
+        </license>
+      </licenses>
+    </component>
+
+    <!-- ▲ HIGH: SnakeYAML DoS CVE-2022-25857 -->
+    <component type="library">
+      <bom-ref>snakeyaml-1.29</bom-ref>
+      <group>org.yaml</group>
+      <name>snakeyaml</name>
+      <version>1.29</version>
+      <purl>pkg:maven/org.yaml/snakeyaml@1.29</purl>
+      <description>SnakeYAML - уязвимая версия (CVE-2022-25857 DoS, CVE-2022-1471)</description>
+      <licenses>
+        <license>
+          <id>Apache-2.0</id>
+        </license>
+      </licenses>
+    </component>
+
+  </components>
+
+  <dependencies>
+
+    <!-- Корневое приложение зависит от spring-boot, jackson, guava, postgresql -->
+    <dependency ref="root-app">
+      <dependency ref="spring-boot-2.6.3"/>
+      <dependency ref="jackson-databind-2.13.0"/>
+      <dependency ref="guava-31.1-jre"/>
+      <dependency ref="postgresql-42.3.3"/>
+    </dependency>
+
+    <!-- spring-boot зависит от spring-core, slf4j, snakeyaml -->
+    <dependency ref="spring-boot-2.6.3">
+      <dependency ref="spring-core-5.3.18"/>
+      <dependency ref="slf4j-api-1.7.36"/>
+      <dependency ref="snakeyaml-1.29"/>
+    </dependency>
+
+    <!-- spring-core зависит от log4j и commons-text -->
+    <dependency ref="spring-core-5.3.18">
+      <dependency ref="log4j-core-2.14.1"/>
+      <dependency ref="commons-text-1.9"/>
+    </dependency>
+
+    <!-- log4j зависит от slf4j -->
+    <dependency ref="log4j-core-2.14.1">
+      <dependency ref="slf4j-api-1.7.36"/>
+    </dependency>
+
+    <!-- postgresql зависит от h2 (тестовая БД) -->
+    <dependency ref="postgresql-42.3.3">
+      <dependency ref="h2-1.4.200"/>
+    </dependency>
+
+    <!-- листовые узлы без зависимостей -->
+    <dependency ref="jackson-databind-2.13.0"/>
+    <dependency ref="commons-text-1.9"/>
+    <dependency ref="h2-1.4.200"/>
+    <dependency ref="slf4j-api-1.7.36"/>
+    <dependency ref="guava-31.1-jre"/>
+    <dependency ref="snakeyaml-1.29"/>
+
+  </dependencies>
+
+</bom>

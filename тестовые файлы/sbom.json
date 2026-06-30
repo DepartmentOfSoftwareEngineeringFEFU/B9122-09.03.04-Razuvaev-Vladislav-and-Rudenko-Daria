@@ -1,0 +1,196 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.4",
+  "serialNumber": "urn:uuid:test-sbom-vulnerable-demo-001",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2024-03-15T12:00:00Z",
+    "tools": [
+      {
+        "vendor": "Syft",
+        "name": "syft",
+        "version": "0.98.0"
+      }
+    ],
+    "component": {
+      "type": "application",
+      "bom-ref": "root-app",
+      "name": "demo-vulnerable-app",
+      "version": "1.0.0",
+      "description": "Тестовое приложение с известными уязвимостями для демонстрации SBOM-анализатора"
+    }
+  },
+  "components": [
+    {
+      "type": "library",
+      "bom-ref": "log4j-core-2.14.1",
+      "group": "org.apache.logging.log4j",
+      "name": "log4j-core",
+      "version": "2.14.1",
+      "purl": "pkg:maven/org.apache.logging.log4j/log4j-core@2.14.1",
+      "description": "Apache Log4j - уязвимая версия (CVE-2021-44228 Log4Shell)",
+      "licenses": [{ "license": { "id": "Apache-2.0" } }],
+      "hashes": [
+        { "alg": "SHA-256", "content": "a00a54e3fb8cb83fab38f8714f240ecc13ab9c492584aa571aec5fc71b48732d" }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "spring-core-5.3.18",
+      "group": "org.springframework",
+      "name": "spring-core",
+      "version": "5.3.18",
+      "purl": "pkg:maven/org.springframework/spring-core@5.3.18",
+      "description": "Spring Framework Core - уязвимая версия (CVE-2022-22965 Spring4Shell)",
+      "licenses": [{ "license": { "id": "Apache-2.0" } }],
+      "hashes": [
+        { "alg": "SHA-256", "content": "b11cadf5bc8e4be3e1c91fc4f3427c7e8b02d948b33fb55e1e0e0873ac15f2d6" }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "jackson-databind-2.13.0",
+      "group": "com.fasterxml.jackson.core",
+      "name": "jackson-databind",
+      "version": "2.13.0",
+      "purl": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.13.0",
+      "description": "Jackson Databind - уязвимая версия (CVE-2022-42003)",
+      "licenses": [{ "license": { "id": "Apache-2.0" } }],
+      "hashes": [
+        { "alg": "SHA-256", "content": "4e0c9e1c17b9c68e41a0e8c66f0ee9d1f9a4b2c7e3d1a5b8f0e2c6d9f3a7b1e4" }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "commons-text-1.9",
+      "group": "org.apache.commons",
+      "name": "commons-text",
+      "version": "1.9",
+      "purl": "pkg:maven/org.apache.commons/commons-text@1.9",
+      "description": "Apache Commons Text - уязвимая версия (CVE-2022-42889 Text4Shell)",
+      "licenses": [{ "license": { "id": "Apache-2.0" } }]
+    },
+    {
+      "type": "library",
+      "bom-ref": "h2-1.4.200",
+      "group": "com.h2database",
+      "name": "h2",
+      "version": "1.4.200",
+      "purl": "pkg:maven/com.h2database/h2@1.4.200",
+      "description": "H2 Database - уязвимая версия (CVE-2021-42392 RCE через JNDI)",
+      "licenses": [{ "license": { "id": "EPL-1.0" } }]
+    },
+    {
+      "type": "library",
+      "bom-ref": "spring-boot-2.6.3",
+      "group": "org.springframework.boot",
+      "name": "spring-boot",
+      "version": "2.6.3",
+      "purl": "pkg:maven/org.springframework.boot/spring-boot@2.6.3",
+      "description": "Spring Boot - безопасная версия (транзитивная зависимость)",
+      "licenses": [{ "license": { "id": "Apache-2.0" } }]
+    },
+    {
+      "type": "library",
+      "bom-ref": "slf4j-api-1.7.36",
+      "group": "org.slf4j",
+      "name": "slf4j-api",
+      "version": "1.7.36",
+      "purl": "pkg:maven/org.slf4j/slf4j-api@1.7.36",
+      "description": "SLF4J API - безопасная версия",
+      "licenses": [{ "license": { "id": "MIT" } }]
+    },
+    {
+      "type": "library",
+      "bom-ref": "guava-31.1-jre",
+      "group": "com.google.guava",
+      "name": "guava",
+      "version": "31.1-jre",
+      "purl": "pkg:maven/com.google.guava/guava@31.1-jre",
+      "description": "Google Guava - безопасная версия",
+      "licenses": [{ "license": { "id": "Apache-2.0" } }]
+    },
+    {
+      "type": "library",
+      "bom-ref": "postgresql-42.3.3",
+      "group": "org.postgresql",
+      "name": "postgresql",
+      "version": "42.3.3",
+      "purl": "pkg:maven/org.postgresql/postgresql@42.3.3",
+      "description": "PostgreSQL JDBC Driver - уязвимая версия (CVE-2022-21724)",
+      "licenses": [{ "license": { "id": "BSD-2-Clause" } }]
+    },
+    {
+      "type": "library",
+      "bom-ref": "snakeyaml-1.29",
+      "group": "org.yaml",
+      "name": "snakeyaml",
+      "version": "1.29",
+      "purl": "pkg:maven/org.yaml/snakeyaml@1.29",
+      "description": "SnakeYAML - уязвимая версия (CVE-2022-25857 DoS)",
+      "licenses": [{ "license": { "id": "Apache-2.0" } }]
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "root-app",
+      "dependsOn": [
+        "spring-boot-2.6.3",
+        "postgresql-42.3.3",
+        "jackson-databind-2.13.0",
+        "guava-31.1-jre"
+      ]
+    },
+    {
+      "ref": "spring-boot-2.6.3",
+      "dependsOn": [
+        "spring-core-5.3.18",
+        "slf4j-api-1.7.36",
+        "snakeyaml-1.29"
+      ]
+    },
+    {
+      "ref": "spring-core-5.3.18",
+      "dependsOn": [
+        "log4j-core-2.14.1",
+        "commons-text-1.9"
+      ]
+    },
+    {
+      "ref": "log4j-core-2.14.1",
+      "dependsOn": [
+        "slf4j-api-1.7.36"
+      ]
+    },
+    {
+      "ref": "jackson-databind-2.13.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "postgresql-42.3.3",
+      "dependsOn": [
+        "h2-1.4.200"
+      ]
+    },
+    {
+      "ref": "commons-text-1.9",
+      "dependsOn": []
+    },
+    {
+      "ref": "h2-1.4.200",
+      "dependsOn": []
+    },
+    {
+      "ref": "slf4j-api-1.7.36",
+      "dependsOn": []
+    },
+    {
+      "ref": "guava-31.1-jre",
+      "dependsOn": []
+    },
+    {
+      "ref": "snakeyaml-1.29",
+      "dependsOn": []
+    }
+  ]
+}
